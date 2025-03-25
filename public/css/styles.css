@@ -15,3 +15,51 @@ a:focus, a:active {
 .social-media a {
     text-decoration: none !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*MODO DARK*/
+
+/* Modo Escuro */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.card, .card-shadow-sm {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.card .card-title, .card .card-text {
+    color: #e0e0e0;
+}
+
+.btn-outline-light {
+    color: #e0e0e0;
+    border-color: #e0e0e0;
+}
+
+.btn-outline-light:hover {
+    background-color: #444;
+    border-color: #e0e0e0;
+}
+

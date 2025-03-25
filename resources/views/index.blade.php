@@ -38,8 +38,7 @@
                 <div class="card shadow-sm p-4 hover-card">
                     <i class="bi bi-person-check fs-1 text-primary"></i>
                     <h4 class="mt-3 text-dark">Como Participar</h4>
-                    <p class="text-muted">Saiba os requisitos necessários e entenda todo o processo de inscrição no
-                        programa.</p>
+                    <p class="text-muted">Saiba os requisitos necessários e entenda todo o processo de inscrição no programa.</p>
                 </div>
             </a>
         </div>
@@ -49,8 +48,7 @@
                 <div class="card shadow-sm p-4 hover-card">
                     <i class="bi bi-bar-chart-line fs-1 text-primary"></i>
                     <h4 class="mt-3 text-dark">Resultados</h4>
-                    <p class="text-muted">Confira os aprovados, os critérios de avaliação e os próximos passos do programa.
-                    </p>
+                    <p class="text-muted">Confira os aprovados, os critérios de avaliação e os próximos passos do programa.</p>
                 </div>
             </a>
         </div>
@@ -65,7 +63,6 @@
             </a>
         </div>
     </div>
-
 
     <!-- Seção Legislação -->
     <div id="legislacao" class="container mt-5">
@@ -119,17 +116,6 @@
     </div>
 
     <style>
-        .hover-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .hover-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-    </style>
-
-    <style>
         .btn-dark-blue {
             background-color: #004085;
             border-color: #004085;
@@ -150,20 +136,25 @@
             color: #fff !important;
             box-shadow: none !important;
         }
-    </style>
 
-    <style>
         .hover-card {
-            height: 100%;
-            /* Garante que todos os cards tenham a mesma altura */
+            height: 100%; /* Garante que todos os cards tenham a mesma altura */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Sombra mais visível */
+            border-radius: 8px; /* Adiciona borda arredondada */
+            background-color: #fff; /* Cor de fundo para o card */
         }
 
         .hover-card p {
-            min-height: 48px;
-            /* Define uma altura mínima para o texto */
+            min-height: 48px; /* Define uma altura mínima para o texto */
+        }
+
+        .hover-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Sombra mais intensa ao passar o mouse */
         }
     </style>
 

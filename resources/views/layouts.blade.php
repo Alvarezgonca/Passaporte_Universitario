@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passaporte Universitário de Maricá</title>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -39,6 +42,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contato</a>
                     </li>
+                    <!-- Ícone de alternância -->
+                    <li class="nav-item">
+                        <a id="toggleDarkMode" class="nav-link ms-2" href="#" aria-label="Alternar Modo Escuro/Claro">
+                            <i class="bi bi-circle-half" id="toggleDarkMode" style="color: black;"></i>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="btn btn-light text-dark ms-2" href="#"><i class="bi bi-lock"></i> Faça seu login</a>
                     </li>
@@ -46,6 +55,7 @@
             </div>
         </div>
     </nav>
+
 
     <!-- Hero Section -->
     @yield('header')
@@ -136,6 +146,27 @@
         window.addEventListener("load", adjustBodyPadding);
         window.addEventListener("resize", adjustBodyPadding);
     </script>
+
+<script>
+    document.getElementById("toggleDarkMode").addEventListener("click", function (event) {
+        event.preventDefault(); // Impede o comportamento padrão do link (evita navegação)
+
+        // Alterna a classe 'dark-mode' no body
+        document.body.classList.toggle("dark-mode");
+
+        // Obtém o ícone dentro do botão
+        const modeIcon = this.querySelector("i");
+
+        // Alterna os ícones dependendo do estado do modo escuro
+        if (document.body.classList.contains("dark-mode")) {
+            // Modo escuro: Ícone branco
+            modeIcon.style.color = "white";  // Cor branca para o ícone no modo escuro
+        } else {
+            // Modo claro: Ícone preto
+            modeIcon.style.color = "black";  // Cor preta para o ícone no modo claro
+        }
+    });
+</script>
 
     @stack('scripts')
 
