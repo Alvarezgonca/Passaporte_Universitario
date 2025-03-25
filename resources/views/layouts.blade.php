@@ -20,11 +20,12 @@
 
     <!-- CSS Personalizado -->
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    @if(session('dark-mode'))
+        <link rel="stylesheet" href="{{ asset('css/dark-mode.css') }}">
+    @endif
 </head>
 
 <body>
-
-    <!-- Navbar -->
     <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-red shadow fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Passaporte Universitário</a>
@@ -42,7 +43,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contato</a>
                     </li>
-                    <!-- Ícone de alternância -->
                     <li class="nav-item">
                         <a id="toggleDarkMode" class="nav-link ms-2" href="#" aria-label="Alternar Modo Escuro/Claro">
                             <i class="bi bi-circle-half" id="toggleDarkMode" style="color: black;"></i>
@@ -56,120 +56,55 @@
         </div>
     </nav>
 
-
-    <!-- Hero Section -->
+<div class="content">
     @yield('header')
 
-    <!-- Conteúdo Principal -->
     <main class="container my-5">
         @yield('content')
     </main>
 
-    <!-- Rodapé -->
     <footer class="py-5 text-white d-flex flex-column align-items-center"
         style="background: linear-gradient(50deg, red, blue);">
-        <div class="container">
-            <div class="row g-4 justify-content-center text-center text-lg-start">
-                <!-- Left Column -->
-                <div class="col-lg-6 d-flex flex-column align-items-center align-items-lg-start">
-                    <h2 class="h3 mb-4 fs-3">
-                        Secretaria de<br>
-                        <span class="fw-bold display-5 fs-1">Educação</span>
-                    </h2>
-                    <img src="{{ asset('img/secretaria_marica.png') }}" alt="Secretaria de Educação de Maricá"
-                        class="img-fluid mb-3" style="max-width: 250px">
-                    <div class="mt-3">
-                        <a href="https://www.marica.rj.gov.br/"
-                            class="text-white text-decoration-none d-flex align-items-center fs-5 justify-content-center justify-content-lg-start"
-                            target="_blank">
-                            <i class="bi bi-link-45deg me-2 fs-5"></i>
-                            www.marica.rj.gov.br
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right Column -->
-                <div class="col-lg-6 d-flex flex-column align-items-center align-items-lg-start">
-                    <h2 class="h3 mb-4 fs-3">
-                        <a href="#" class="text-white text-decoration-none fs-3">
-                            Fale Conosco
-                        </a>
-                    </h2>
-
-                    <div class="mb-3 fs-5">
-                        <p class="d-flex align-items-center justify-content-center justify-content-lg-start mb-2">
-                            <i class="bi bi-telephone-fill me-2 fs-5"></i>
-                            (21) 2637-2052 ramal 551 | (21) 99202-4725
-                        </p>
-                        <p class="mb-2">
-                            <a href="mailto:passaporte@sctf.marica.rj.gov.br"
-                                class="text-white text-decoration-none d-flex align-items-center justify-content-center justify-content-lg-start fs-5">
-                                <i class="bi bi-envelope-fill me-2 fs-5"></i>
-                                passaporte@sctf.marica.rj.gov.br
-                            </a>
-                        </p>
-                    </div>
-
-                    <!-- Social Media Icons -->
-                    <div class="social-media mt-4 d-flex gap-3 justify-content-center justify-content-lg-start">
-                        <a href="https://www.facebook.com/Passaporte-Universitário-Maricá-405931809972671"
-                            class="text-white" target="_blank">
-                            <i class="bi bi-facebook fs-3"></i>
-                        </a>
-                        <a href="https://twitter.com/passaporteuniv1" class="text-white" target="_blank">
-                            <i class="bi bi-twitter fs-3"></i>
-                        </a>
-                        <a href="https://www.youtube.com/channel/UCfVNNDSrnkn3u3HWWrtV6AA" class="text-white"
-                            target="_blank">
-                            <i class="bi bi-youtube fs-3"></i>
-                        </a>
-                        <a href="https://instagram.com/passaporte.universitario" class="text-white" target="_blank">
-                            <i class="bi bi-instagram fs-3"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('partials.footer')
     </footer>
+</div>
 
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        function adjustBodyPadding() {
-            const navbar = document.getElementById("mainNavbar");
-            document.body.style.paddingTop = navbar.offsetHeight + "px";
+        document.getElementById("toggleDarkMode").addEventListener("click", function (event) {
+            event.preventDefault();
+            document.body.classList.toggle("dark-mode");
+
+            // Salvar a preferência do usuário
+            fetch("/toggle-dark-mode", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ darkMode: document.body.classList.contains("dark-mode") })
+            });
+        });
+    </script>
+    <script>
+        // Função para ajustar a margem superior do conteúdo com base na altura da navbar fixa
+        function adjustNavbar() {
+            var navbar = document.querySelector('.navbar'); // Seleciona a navbar fixa
+            var content = document.querySelector('.content'); // Seleciona o conteúdo
+
+            // Verifica a altura da navbar
+            var navbarHeight = navbar.offsetHeight;
+
+            // Ajusta o padding-top do conteúdo para não sobrepor a navbar
+            content.style.paddingTop = navbarHeight + 'px';
         }
 
-        // Ajusta ao carregar e ao redimensionar a tela
-        window.addEventListener("load", adjustBodyPadding);
-        window.addEventListener("resize", adjustBodyPadding);
+        // Chama a função ao carregar a página e ao redimensionar a janela
+        window.addEventListener('load', adjustNavbar);
+        window.addEventListener('resize', adjustNavbar);
     </script>
 
-<script>
-    document.getElementById("toggleDarkMode").addEventListener("click", function (event) {
-        event.preventDefault(); // Impede o comportamento padrão do link (evita navegação)
-
-        // Alterna a classe 'dark-mode' no body
-        document.body.classList.toggle("dark-mode");
-
-        // Obtém o ícone dentro do botão
-        const modeIcon = this.querySelector("i");
-
-        // Alterna os ícones dependendo do estado do modo escuro
-        if (document.body.classList.contains("dark-mode")) {
-            // Modo escuro: Ícone branco
-            modeIcon.style.color = "white";  // Cor branca para o ícone no modo escuro
-        } else {
-            // Modo claro: Ícone preto
-            modeIcon.style.color = "black";  // Cor preta para o ícone no modo claro
-        }
-    });
-</script>
-
     @stack('scripts')
-
 </body>
 
 </html>

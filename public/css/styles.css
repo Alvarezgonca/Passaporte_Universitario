@@ -1,15 +1,17 @@
+/* Estilos padrão */
 .bg-red {
     background-color: #930000;
 }
 
 /* Remover outline e box-shadow ao focar ou ativar links */
-a:focus, a:active {
+a:focus,
+a:active {
     outline: none;
     box-shadow: none;
 }
 
 * {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 .social-media a {
@@ -18,25 +20,11 @@ a:focus, a:active {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*MODO DARK*/
+/* Modo Claro */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
 
 /* Modo Escuro */
 body.dark-mode {
@@ -44,12 +32,14 @@ body.dark-mode {
     color: #e0e0e0;
 }
 
-.card, .card-shadow-sm {
+.card,
+.card-shadow-sm {
     background-color: #333;
     color: #e0e0e0;
 }
 
-.card .card-title, .card .card-text {
+.card .card-title,
+.card .card-text {
     color: #e0e0e0;
 }
 
@@ -62,4 +52,3 @@ body.dark-mode {
     background-color: #444;
     border-color: #e0e0e0;
 }
-
