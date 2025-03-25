@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="#" class="text-decoration-none">
+            <a href="https://passaporteuniversitario.marica.rj.gov.br/resultados" class="text-decoration-none">
                 <div class="card shadow-sm p-4 hover-card">
                     <i class="bi bi-bar-chart-line fs-1 text-primary"></i>
                     <h4 class="mt-3 text-dark">Resultados</h4>
@@ -54,7 +54,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="#" class="text-decoration-none">
+            <a href="https://passaporteuniversitario.marica.rj.gov.br/instituicoes-credenciadas" class="text-decoration-none">
                 <div class="card shadow-sm p-4 hover-card">
                     <i class="bi bi-book fs-1 text-primary"></i>
                     <h4 class="mt-3 text-dark">Cursos e Universidades</h4>
