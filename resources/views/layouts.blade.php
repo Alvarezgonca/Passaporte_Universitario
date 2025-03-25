@@ -57,7 +57,7 @@
 
     <!-- Rodapé -->
     <footer class="py-5 text-white d-flex flex-column align-items-center"
-        style="background: linear-gradient(60deg, red, blue);">
+        style="background: linear-gradient(50deg, red, blue);">
         <div class="container">
             <div class="row g-4 justify-content-center text-center text-lg-start">
                 <!-- Left Column -->
