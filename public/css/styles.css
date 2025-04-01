@@ -10,6 +10,16 @@ a:active {
     box-shadow: none;
 }
 
+/* Remove o contorno azul padrão dos inputs, selects, textareas e botões */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+    box-shadow: none !important; /* Remove qualquer efeito de sombra */
+    border-color: inherit !important; /* Mantém a borda normal sem mudanças */
+}
+
 * {
     font-family: "Montserrat", sans-serif;
 }

@@ -1,47 +1,132 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('title', 'Login')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+@section('content')
+
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div id="card" class="card text-black bg-white shadow-lg">
+                <div id="card-header" class="card-header text-center border-bottom">
+                    <h4><i class="bi bi-person-lock"></i> Login</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <!-- Escolher Tipo de Login -->
+                        <div class="mb-3">
+                            <label for="loginType" class="form-label">Entrar com:</label>
+                            <select id="loginType" class="form-select">
+                                <option value="cpf">CPF ou CNPJ</option>
+                                <option value="email">E-mail</option>
+                            </select>
+                        </div>
+
+                        <!-- CPF ou CNPJ -->
+                        <div class="mb-3" id="cpfField">
+                            {{-- <label for="document" class="form-label">CPF ou CNPJ</label> --}}
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" name="document" id="document" class="form-control" required
+                                    placeholder="Digite seu CPF ou CNPJ">
+                            </div>
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="mb-3 d-none" id="emailField">
+                            {{-- <label for="email" class="form-label">E-mail</label> --}}
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" name="email" id="email" class="form-control"
+                                    placeholder="Digite seu e-mail">
+                            </div>
+                        </div>
+
+                        <!-- Senha -->
+                        <div class="mb-3">
+                            {{-- <label for="password" class="form-label">Senha</label> --}}
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" name="password" id="password" class="form-control" required
+                                    placeholder="Digite sua senha">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lembrar-me -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" name="remember" class="form-check-input" id="remember">
+                                <label class="form-check-label" for="remember">Lembrar-me</label>
+                            </div>
+                            <!-- Esqueci minha senha -->
+                            <div class="mb-3 text-center">
+                                <a href="{{ route('password.request') }}"
+                                    class="link-offset-1 text-decoration-underline link-offset-2-hover">Esqueci minha
+                                    senha</a>
+                            </div>
+                        </div>
+
+                        <!-- Botão de Enviar -->
+                        <button type="submit" class="btn btn-primary w-100"><i class="bi bi-box-arrow-in-right"></i>
+                            Entrar
+                        </button>
+
+                        <div class="d-flex justify-content-center mt-3">
+                            Não tem uma conta?
+                            <a href="{{ route('register') }}"
+                                class="ms-2 link-offset-1 text-decoration-underline link-offset-2-hover">Cadastre-se</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+@endsection
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var darkMode = "{{session('theme', 'light')}}";
+        if (darkMode == 'dark') {
+            // Passar o Card para o modo escuro
+            document.getElementById('card').classList.remove('bg-white', 'text-black');
+            document.getElementById('card').classList.add('bg-dark', 'text-white');
+        } else {
+            console.log("Light Mode content loaded");
+        }
+    });
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+    document.addEventListener("DOMContentLoaded", function () {
+        const body = document.body;
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+        const observer = new MutationObserver(() => {
+            if (body.classList.contains("dark-mode")) {
+                // Passar o Card para o modo escuro
+                document.getElementById('card').classList.remove('bg-white', 'text-black');
+                document.getElementById('card').classList.add('bg-dark', 'text-white');
+            } else {
+                // Passar o Card para o modo escuro
+                document.getElementById('card').classList.add('bg-white', 'text-black');
+                document.getElementById('card').classList.remove('bg-dark', 'text-white');
+            }
+        });
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        observer.observe(body, { attributes: true, attributeFilter: ["class"] });
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        // Script para alternar entre CPF/CNPJ e E-mail
+        const loginType = document.getElementById("loginType");
+        const cpfField = document.getElementById("cpfField");
+        const emailField = document.getElementById("emailField");
+
+        loginType.addEventListener("change", function () {
+            if (this.value === "email") {
+                cpfField.classList.add("d-none");
+                emailField.classList.remove("d-none");
+            } else {
+                cpfField.classList.remove("d-none");
+                emailField.classList.add("d-none");
+            }
+        });
+    });
+</script>

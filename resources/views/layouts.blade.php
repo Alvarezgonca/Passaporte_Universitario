@@ -28,63 +28,100 @@
 <body>
     <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-red shadow fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Passaporte Universitário</a>
+            <a class="navbar-brand fw-bold" href="/">Passaporte Universitário</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Início</a>
+                        <a class="nav-link active" href="/">Início</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sobre</a>
+                        <a class="nav-link" href="/">Sobre</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contato</a>
+                        <a class="nav-link" href="/">Contato</a>
                     </li>
-                    <li class="nav-item">
-                        <a id="toggleDarkMode" class="nav-link ms-2" href="#" aria-label="Alternar Modo Escuro/Claro">
-                            <i class="bi bi-circle-half" id="toggleDarkMode" style="color: black;"></i>
+                    <li class="nav-item d-flex align-items-center">
+                        <a id="toggleDarkMode" class="nav-link" href="#" aria-label="Alternar Modo Escuro/Claro">
+                            <i class="bi bi-circle-half" id="darkModeIcon" style="color: black; filter: invert(1);"></i>
+                            {{-- <i class="bi bi-circle-half" id="darkModeIcon" style="color: black;"></i> --}}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-light text-dark ms-2" href="#"><i class="bi bi-lock"></i> Faça seu login</a>
+                        <a class="btn btn-light text-dark ms-2" href="{{route('login')}}"><i class="bi bi-lock"></i>
+                            Faça seu login</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-<div class="content">
-    @yield('header')
+    <div class="content">
+        @yield('header')
 
-    <main class="container my-5">
-        @yield('content')
-    </main>
+        @if (View::hasSection('content'))
+            <main class="container my-5">
+                @yield('content')
+            </main>
+        @endif
 
-    <footer class="py-5 text-white d-flex flex-column align-items-center"
-        style="background: linear-gradient(50deg, red, blue);">
-        @include('partials.footer')
-    </footer>
-</div>
+        <footer class="py-5 text-white d-flex flex-column align-items-center"
+            style="background: linear-gradient(50deg, red, blue);">
+            @include('partials.footer')
+        </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById("toggleDarkMode").addEventListener("click", function (event) {
-            event.preventDefault();
-            document.body.classList.toggle("dark-mode");
+        document.addEventListener("DOMContentLoaded", function () {
+            const darkModePreference = "{{ session('theme', 'light') }}"; // Obtém o tema salvo na sessão
+            const body = document.body;
+            const darkModeIcon = document.getElementById("darkModeIcon");
 
-            // Salvar a preferência do usuário
-            fetch("/toggle-dark-mode", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({ darkMode: document.body.classList.contains("dark-mode") })
+            // Aplica o tema salvo na sessão
+            if (darkModePreference === "dark") {
+                body.classList.add("dark-mode");
+                darkModeIcon.classList.replace("bi-circle-half", "bi-moon-stars-fill"); // Ícone de modo escuro
+            } else {
+                darkModeIcon.classList.replace("bi-moon-stars-fill", "bi-circle-half"); // Ícone de modo claro
+            }
+
+            document.getElementById("toggleDarkMode").addEventListener("click", function (event) {
+                event.preventDefault();
+                const isDarkMode = body.classList.toggle("dark-mode"); // Alterna a classe no body
+
+                // Alterna o ícone de acordo com o tema
+                if (isDarkMode) {
+                    darkModeIcon.classList.replace("bi-circle-half", "bi-moon-stars-fill");
+                } else {
+                    darkModeIcon.classList.replace("bi-moon-stars-fill", "bi-circle-half");
+                }
+
+                // Desativa o botão temporariamente para evitar múltiplos cliques
+                this.classList.add("disabled");
+
+                fetch("{{ route('toggle-theme') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    }
+                }).then(response => response.json())
+                    .then(data => console.log("Tema atualizado:", data.theme))
+                    .catch(error => {
+                        console.error("Erro ao alternar o tema:", error);
+                        body.classList.toggle("dark-mode"); // Reverte caso haja erro
+                    })
+                    .finally(() => {
+                        this.classList.remove("disabled"); // Reativa o botão
+                    });
             });
         });
+
+
+
     </script>
     <script>
         // Função para ajustar a margem superior do conteúdo com base na altura da navbar fixa

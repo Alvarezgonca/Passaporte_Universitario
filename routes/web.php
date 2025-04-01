@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::post('/toggle-dark-mode', [App\Http\Controllers\ThemeController::class, 'toggleDarkMode']);
+Route::post('/toggle-theme', [ThemeController::class, 'toggleTheme'])->name('toggle-theme');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
