@@ -25,7 +25,7 @@
                         <div class="mb-3">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" name="email" id="email" class="form-control" required autofocus
+                                <input type="email" name="email" id="email" class="form-control" required
                                     placeholder="Digite seu e-mail">
                             </div>
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />

@@ -18,7 +18,7 @@
                         <label for="name" class="form-label">Nome</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person"></i></span>
-                            <input type="text" name="name" id="name" class="form-control" required autofocus
+                            <input type="text" name="name" id="name" class="form-control" required
                                 placeholder="Digite seu nome" value="{{ old('name') }}">
                         </div>
                         @error('name')
