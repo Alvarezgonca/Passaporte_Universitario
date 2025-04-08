@@ -26,17 +26,14 @@
                         @enderror
                     </div>
 
-                    <!-- E-mail -->
+                    <!-- Documento (CPF ou CNPJ) -->
                     <div class="mb-3">
-                        <label for="email" class="form-label">E-mail</label>
+                        <label for="document" class="form-label">CPF ou CNPJ</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                            <input type="email" name="email" id="email" class="form-control" required
-                                placeholder="Digite seu e-mail" value="{{ old('email') }}">
+                            <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                            <input type="text" name="document" class="form-control document-mask" required
+                                placeholder="Digite seu CPF ou CNPJ" value="{{ old('document') }}">
                         </div>
-                        @error('email')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <!-- Senha -->
@@ -85,17 +82,17 @@
 
 <!-- Scripts para Dark Mode -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var darkMode = "{{ session('theme', 'light') }}";
-        const cardElement = document.getElementById('card');
-        if (darkMode == 'dark') {
-            cardElement.classList.remove('bg-white', 'text-black');
-            cardElement.classList.add('bg-dark', 'text-white');
-        } else {
-            cardElement.classList.remove('bg-dark', 'text-white');
-            cardElement.classList.add('bg-white', 'text-black');
-        }
-    });
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     var darkMode = "{{ session('theme', 'light') }}";
+    //     const cardElement = document.getElementById('card');
+    //     if (darkMode == 'dark') {
+    //         cardElement.classList.remove('bg-white', 'text-black');
+    //         cardElement.classList.add('bg-dark', 'text-white');
+    //     } else {
+    //         cardElement.classList.remove('bg-dark', 'text-white');
+    //         cardElement.classList.add('bg-white', 'text-black');
+    //     }
+    // });
 
     document.addEventListener("DOMContentLoaded", function () {
         const body = document.body;

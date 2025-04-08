@@ -34,7 +34,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
                     <li class="nav-item">
                         <a class="nav-link active" href="/">Início</a>
                     </li>
@@ -50,10 +50,36 @@
                             {{-- <i class="bi bi-circle-half" id="darkModeIcon" style="color: black;"></i> --}}
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-light text-dark ms-2" href="{{route('login')}}"><i class="bi bi-lock"></i>
-                            Faça seu login</a>
+                    <li class="nav-item dropdown">
+                        @if (Auth::check())
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle fs-5"></i>
+                                <span class="ms-1">{{ Auth::user()->name }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ route('home') }}"><i class="bi bi-person"></i>
+                                        Perfil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('home') }}"><i class="bi bi-pencil-square"></i>
+                                        Editar</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
+                                            Sair</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        @else
+                            <a class="btn btn-light text-dark ms-2" href="{{ route('login') }}">
+                                <i class="bi bi-lock"></i> Faça seu login
+                            </a>
+                        @endif
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -73,7 +99,20 @@
             @include('partials.footer')
         </footer>
     </div>
+    <script>
+        function adjustNavbar() {
+            var navbar = document.querySelector('.navbar');
+            var content = document.querySelector('.content');
+            var navbarHeight = navbar.offsetHeight;
+            content.style.paddingTop = navbarHeight + 'px';
+        }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            adjustNavbar(); // Executa logo após o DOM estar pronto
+        });
+
+        window.addEventListener('resize', adjustNavbar);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -120,27 +159,36 @@
                     });
             });
         });
-
-
-
     </script>
-    <script>
-        // Função para ajustar a margem superior do conteúdo com base na altura da navbar fixa
-        function adjustNavbar() {
-            var navbar = document.querySelector('.navbar'); // Seleciona a navbar fixa
-            var content = document.querySelector('.content'); // Seleciona o conteúdo
 
-            // Verifica a altura da navbar
-            var navbarHeight = navbar.offsetHeight;
+<script src="https://unpkg.com/imask"></script>
 
-            // Ajusta o padding-top do conteúdo para não sobrepor a navbar
-            content.style.paddingTop = navbarHeight + 'px';
-        }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = document.querySelectorAll('.document-mask');
 
-        // Chama a função ao carregar a página e ao redimensionar a janela
-        window.addEventListener('load', adjustNavbar);
-        window.addEventListener('resize', adjustNavbar);
-    </script>
+        inputs.forEach(input => {
+            IMask(input, {
+                mask: [
+                    {
+                        mask: '000.000.000-00',
+                        maxLength: 11
+                    },
+                    {
+                        mask: '00.000.000/0000-00',
+                        maxLength: 14
+                    }
+                ],
+                dispatch: function (appended, dynamicMasked) {
+                    const number = (dynamicMasked.value + appended).replace(/\D/g, '');
+                    return number.length > 11
+                        ? dynamicMasked.compiledMasks[1]
+                        : dynamicMasked.compiledMasks[0];
+                }
+            });
+        });
+    });
+</script>
 
     @stack('scripts')
 </body>
