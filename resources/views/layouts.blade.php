@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{asset('img/logo_sem_fundo.png')}}" type="img/jpg">
     <title>Passaporte Universitário de Maricá</title>
 
     <!-- Font Awesome -->
