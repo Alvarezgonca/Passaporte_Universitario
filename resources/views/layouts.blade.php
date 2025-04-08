@@ -58,7 +58,7 @@
                                 <span class="ms-1">{{ Auth::user()->name }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('home') }}"><i class="bi bi-person"></i>
+                                <li><a class="dropdown-item" href="{{ route('perfil.index') }}"><i class="bi bi-person"></i>
                                         Perfil</a></li>
                                 <li><a class="dropdown-item" href="{{ route('home') }}"><i class="bi bi-pencil-square"></i>
                                         Editar</a></li>

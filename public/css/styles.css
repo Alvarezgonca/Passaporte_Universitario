@@ -42,13 +42,13 @@ body.dark-mode {
     color: #e0e0e0;
 }
 
-.card,
+/* .card,
 .card-shadow-sm {
     background-color: #333;
     color: #e0e0e0;
-}
+} */
 
-.card .card-title,
+/* .card .card-title,
 .card .card-text {
     color: #e0e0e0;
 }
@@ -61,4 +61,4 @@ body.dark-mode {
 .btn-outline-light:hover {
     background-color: #444;
     border-color: #e0e0e0;
-}
+} */
