@@ -161,34 +161,34 @@
         });
     </script>
 
-<script src="https://unpkg.com/imask"></script>
+    <script src="https://unpkg.com/imask"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const inputs = document.querySelectorAll('.document-mask');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = document.querySelectorAll('.document-mask');
 
-        inputs.forEach(input => {
-            IMask(input, {
-                mask: [
-                    {
-                        mask: '000.000.000-00',
-                        maxLength: 11
-                    },
-                    {
-                        mask: '00.000.000/0000-00',
-                        maxLength: 14
+            inputs.forEach(input => {
+                IMask(input, {
+                    mask: [
+                        {
+                            mask: '000.000.000-00',
+                            maxLength: 11
+                        },
+                        {
+                            mask: '00.000.000/0000-00',
+                            maxLength: 14
+                        }
+                    ],
+                    dispatch: function (appended, dynamicMasked) {
+                        const number = (dynamicMasked.value + appended).replace(/\D/g, '');
+                        return number.length > 11
+                            ? dynamicMasked.compiledMasks[1]
+                            : dynamicMasked.compiledMasks[0];
                     }
-                ],
-                dispatch: function (appended, dynamicMasked) {
-                    const number = (dynamicMasked.value + appended).replace(/\D/g, '');
-                    return number.length > 11
-                        ? dynamicMasked.compiledMasks[1]
-                        : dynamicMasked.compiledMasks[0];
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 
     @stack('scripts')
 </body>
